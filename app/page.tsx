@@ -58,23 +58,28 @@ const Home = () => {
 
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
-
       <ul className="article-list">
         {articles.map((article, index) => (
-          <li
-            key={index}
-            className="article"
-          >
-            <h2>{article.title}</h2>
-            <p>{article.description}</p>
-            <a
-              href={article.url}
-              target="_blank"
-              rel="noopener noreferrer"
+            <li
+              key={index}
+              className="article"
             >
-              Read more
-            </a>
-          </li>
+              <h2>{article.title}</h2>
+              <p>{article.description}</p>
+              <a
+                href={article.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Read more
+              </a>
+              <button 
+                className={`save ${article.saved ? 'saved' : ''}`}
+                onClick={() => handleSave(article)}
+              >
+                {article.saved ? 'saved' : 'save'}
+              </button>
+            </li>
         ))}
       </ul>
     </div>
