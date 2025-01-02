@@ -36,7 +36,7 @@ const Home = () => {
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (query.trim()) {
-      fetchArticles(query);
+      fetchArticles(query.toUpperCase());
     }
   };
 
