@@ -60,6 +60,7 @@ const Home = () => {
       {error && <p style={{ color: "red" }}>{error}</p>}
       <ul className="article-list">
         {articles.map((article, index) => (
+          article.url !== "https://removed.com" && (
             <li
               key={index}
               className="article"
@@ -80,6 +81,7 @@ const Home = () => {
                 {article.saved ? 'saved' : 'save'}
               </button>
             </li>
+          )
         ))}
       </ul>
     </div>
