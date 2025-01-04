@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Link from "next/link";
-
+import Nav from "./nav";
+import { SavedArticlesProvider } from "./contexts/savedArticlesContext";
 
 export const metadata: Metadata = {
   title: "ToC Assignment",
@@ -9,18 +9,16 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
+
   return (
     <html lang="en">
       <body>
         <header>
-          <nav>
-            <Link href="/">Home</Link>
-            {' | '}
-            <Link href="/mylist">My List</Link>
-          </nav>
+          <Nav />
         </header>
-
-        {children}
+        <SavedArticlesProvider>
+            {children}
+        </SavedArticlesProvider>
 
         <footer>
         </footer>
