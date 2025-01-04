@@ -9,25 +9,23 @@ const Home = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  
-  
   const { onAddToSavedArticle, onRemoveFromSavedArticle } = useContext(SavedArticlesContext);
   
+  // Fetch articles from the API through local API route
   const fetchArticles = async (searchQuery: string) => {
     try {
       setLoading(true);
       setError(null);
       
       const response = await fetch(`/api/news?q=${encodeURIComponent(searchQuery)}`);
-      if (!response.ok) {a
+      if (!response.ok) {
         throw new Error('Failed to fetch articles');
       }
       
       const data: SearchResult = await response.json();
       
-      // update articles
-      const newArticles: Article[] = data.articles;
-      setArticles(newArticles || []);
+      // Update the articles state with the fetched data
+      setArticles(data.articles || []);
       
     } catch (err: any) {
       setError(err.message);
@@ -36,6 +34,7 @@ const Home = () => {
     }
   };
   
+  // Handle form submission
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (query.trim()) {
@@ -43,30 +42,25 @@ const Home = () => {
     }
   };
   
+  // Handle saving an article -- remove if saved, add if not saved
   const handleSave = (article: Article) => {
     try {
+      let save = true;
       if (article.saved) {
-        removeArticle(article);
+        // if the article is saved, set current article.save to false
+        save = false
+        onRemoveFromSavedArticle(article);
       } else {
-        saveArticle(article);
+        // otherwise set current article.save to true
+        onAddToSavedArticle(article);
       }
+      // update the article.saved state depending on the current saved state
+      setArticles(articles.map(a => 
+        a.url == article.url ? { ...a, saved: save } : a
+      ))
     } catch (err: any) {
       console.log(`Could not be saved: ${err}`)
     }
-  };
-  
-  const saveArticle = (article: Article) => {
-    setArticles(articles.map(a => 
-      a.url == article.url ? { ...a, saved: true } : a
-    ))
-    onAddToSavedArticle(article);
-  };
-  
-  const removeArticle = (article: Article) => {
-    setArticles(articles.map(a => 
-      a.url == article.url ? { ...a, saved: false } : a
-    ))
-    onRemoveFromSavedArticle(article);
   };
   
   return (
