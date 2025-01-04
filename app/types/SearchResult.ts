@@ -1,10 +1,10 @@
 // declare interface for search result and its components
-interface SearchResult {
+export interface SearchResult {
     status: string;
     totalResults: number;
     articles: Article[];
 }
-interface Article {
+export interface Article {
     source: Source;
     author: string;
     title: string;
@@ -13,8 +13,9 @@ interface Article {
     urlToImage: string;
     publishedAt: Date;
     content: string;
+    saved?: boolean;
 }
-interface Source {
+export interface Source {
     id: string;
     name: string;
 }
