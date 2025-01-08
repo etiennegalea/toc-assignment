@@ -37,11 +37,9 @@ const Home = () => {
   // Handle form submission
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (query.trim()) {
-      fetchArticles(query.toUpperCase());
-    }
+    fetchArticles(query.trim().toUpperCase());
   };
-  
+
   // Handle saving an article -- remove if saved, add if not saved
   const handleSave = (article: Article) => {
     try {
