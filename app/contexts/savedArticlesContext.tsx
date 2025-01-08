@@ -2,7 +2,7 @@
 
 import React, { createContext, useMemo, useState } from "react";
 import { Article } from "../types/SearchResult";
-import { getFromLocalStorage, saveToLocalStorage } from "../(utilities)/localstorage";
+import { getFromLocalStorage, saveToLocalStorage } from "../(utils)/localstorage";
 
 interface SavedArticlesContextType {
   savedArticles: Article[];
